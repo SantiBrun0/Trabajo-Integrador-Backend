@@ -5,9 +5,9 @@ import java.util.List;
 public interface IDAO<T> {
 
     void agregar(T t);
-    void modificar(String nombre, String apellido, String t);
-    void eliminar(String matricula);
-    T buscar(String matricula);
+    void modificar(String x, String y, String z);
+    void eliminar(String t);
+    T buscar(String t);
     List<T> listar();
 
 }

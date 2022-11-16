@@ -1,7 +1,6 @@
 package com.santiagobruno.trabajointegrador.model;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
 
-public record Turno(Paciente paciente, Odontologo odontologo, Date fecha, Time hora) {
+public record Turno(Paciente paciente, Odontologo odontologo, LocalDate fecha) {
 }
