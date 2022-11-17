@@ -1,8 +1,9 @@
 package com.santiagobruno.trabajointegrador.model;
 
+
 import java.util.Objects;
 
-public final class Odontologo {
+public class Odontologo {
     private final String apellido;
     private final String nombre;
     private final String matricula;

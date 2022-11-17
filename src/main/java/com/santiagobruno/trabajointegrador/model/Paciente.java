@@ -4,7 +4,7 @@ package com.santiagobruno.trabajointegrador.model;
 import java.sql.Date;
 import java.util.Objects;
 
-public final class Paciente {
+public class Paciente {
     private final String apellido;
     private final String nombre;
     private final String domicilio;
