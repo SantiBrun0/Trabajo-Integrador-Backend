@@ -4,9 +4,9 @@ package com.santiagobruno.trabajointegrador.model;
 import java.util.Objects;
 
 public class Odontologo {
-    private final String apellido;
-    private final String nombre;
-    private final String matricula;
+    private String apellido;
+    private String nombre;
+    private String matricula;
 
     public Odontologo(String apellido, String nombre, String matricula) {
         this.apellido = apellido;
@@ -24,6 +24,30 @@ public class Odontologo {
 
     public String matricula() {
         return matricula;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     @Override

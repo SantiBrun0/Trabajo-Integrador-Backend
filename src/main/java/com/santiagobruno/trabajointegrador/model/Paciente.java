@@ -5,11 +5,11 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class Paciente {
-    private final String apellido;
-    private final String nombre;
-    private final String domicilio;
-    private final String dni;
-    private final Date fechaAlta;
+    private String apellido;
+    private String nombre;
+    private String domicilio;
+    private String dni;
+    private Date fechaAlta;
 
     public Paciente(String apellido, String nombre, String domicilio, String dni, Date fechaAlta) {
         this.apellido = apellido;
@@ -37,6 +37,46 @@ public class Paciente {
 
     public Date fechaAlta() {
         return fechaAlta;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public Date getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
     }
 
     @Override
