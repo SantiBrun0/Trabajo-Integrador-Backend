@@ -19,7 +19,7 @@ public class OdontologoController {
 
     @PostMapping("/odontologo")
     public ResponseEntity<String> agregarOdontologo(@RequestBody Odontologo odontologo) {
-        if (service.listarOdontologos().contains(odontologo)) return new ResponseEntity<>("El odontologo que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
+        if (Objects.nonNull(service.buscarOdontologo(odontologo.matricula()))) return new ResponseEntity<>("El odontologo que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
         if (odontologo.matricula().isEmpty() || odontologo.nombre().isEmpty() || odontologo.apellido().isEmpty()) return new ResponseEntity<>("Error al agregar el odontologo, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
 
         service.agregarOdontologo(odontologo);

@@ -4,9 +4,12 @@ package com.santiagobruno.trabajointegrador.controller;
 import com.santiagobruno.trabajointegrador.model.Paciente;
 import com.santiagobruno.trabajointegrador.service.PacienteService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @AllArgsConstructor
@@ -15,37 +18,42 @@ public class PacienteController {
     private final PacienteService service;
 
     @PostMapping("/paciente")
-    public void agregarPaciente(@RequestBody Paciente paciente) throws Exception {
-        if (paciente == null) throw new Exception();
+    public ResponseEntity<String> agregarPaciente(@RequestBody Paciente paciente){
+        if (Objects.nonNull(service.buscarPaciente(paciente.dni()))) return new ResponseEntity<>("El paciente que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
+        if (paciente.dni().isEmpty() || paciente.nombre().isEmpty() || paciente.apellido().isEmpty()) return new ResponseEntity<>("Error al agregar el paciente, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
 
         service.agregarPaciente(paciente);
+        return new ResponseEntity<>("Paciente agregado con éxito", null, HttpStatus.CREATED);
     }
 
     @PutMapping("/paciente")
-    public void modificarPaciente(@RequestBody Paciente paciente) throws Exception {
-        if(service.buscarPaciente(paciente.dni()).dni().isEmpty()) throw new Exception();
+    public ResponseEntity<String> modificarPaciente(@RequestBody Paciente paciente) {
+        if(Objects.isNull(service.buscarPaciente(paciente.dni()))) return new ResponseEntity<>("El paciente a modificar no existe", null, HttpStatus.NOT_FOUND);
 
         service.modificarPaciente(paciente.nombre(), paciente.apellido(), paciente.dni());
+        return new ResponseEntity<>("Paciente modificado con éxito", null, HttpStatus.OK);
     }
 
     @DeleteMapping("/paciente/{dni}")
-    public void eliminarPaciente(@PathVariable String dni) throws Exception {
-        if(service.buscarPaciente(dni).dni().isEmpty()) throw new Exception();
+    public ResponseEntity<String> eliminarPaciente(@PathVariable String dni) {
+        if(Objects.isNull(service.buscarPaciente(dni))) return new ResponseEntity<>("El paciente a eliminar no existe", null, HttpStatus.NOT_FOUND);
 
         service.eliminarPaciente(dni);
+        return new ResponseEntity<>("Paciente eliminado con éxito", null, HttpStatus.OK);
     }
 
     @GetMapping("/paciente/{dni}")
-    public Paciente buscarPaciente(@PathVariable String dni) throws Exception {
-        if(service.buscarPaciente(dni).dni().isEmpty()) throw new Exception();
+    public ResponseEntity<Paciente> buscarPaciente(@PathVariable String dni) {
+        if(Objects.isNull(service.buscarPaciente(dni))) return new ResponseEntity<>(null, null, HttpStatus.NOT_FOUND);
 
-        return service.buscarPaciente(dni);
-
+        return new ResponseEntity<>(service.buscarPaciente(dni), null, HttpStatus.OK);
     }
 
     @GetMapping("/pacientes")
-    public List<Paciente> listarPacientes() {
-        return service.listarPacientes();
+    public ResponseEntity<List<Paciente>> listarPacientes() {
+        if(service.listarPacientes().isEmpty()) return new ResponseEntity<>(null, null, HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(service.listarPacientes(), null, HttpStatus.OK);
     }
 
 }
