@@ -19,8 +19,8 @@ public class OdontologoController {
 
     @PostMapping("/odontologo")
     public ResponseEntity<String> agregarOdontologo(@RequestBody Odontologo odontologo) {
-        if (Objects.nonNull(service.buscarOdontologo(odontologo.matricula()))) return new ResponseEntity<>("El odontologo que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
-        if (odontologo.matricula().isEmpty() || odontologo.nombre().isEmpty() || odontologo.apellido().isEmpty()) return new ResponseEntity<>("Error al agregar el odontologo, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
+        if (Objects.nonNull(service.buscarOdontologo(odontologo.getMatricula()))) return new ResponseEntity<>("El odontologo que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
+        if (odontologo.getMatricula().isEmpty() || odontologo.getNombre().isEmpty() || odontologo.getApellido().isEmpty()) return new ResponseEntity<>("Error al agregar el odontologo, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
 
         service.agregarOdontologo(odontologo);
         return new ResponseEntity<>("Odontologo agregado con éxito", null, HttpStatus.CREATED);
@@ -28,9 +28,9 @@ public class OdontologoController {
 
     @PutMapping("/odontologo")
     public ResponseEntity<String> modificarOdontologo(@RequestBody Odontologo odontologo) {
-        if(Objects.isNull(service.buscarOdontologo(odontologo.matricula()))) return new ResponseEntity<>("El odontologo a modificar no existe", null, HttpStatus.NOT_FOUND);
+        if(Objects.isNull(service.buscarOdontologo(odontologo.getMatricula()))) return new ResponseEntity<>("El odontologo a modificar no existe", null, HttpStatus.NOT_FOUND);
 
-        service.modificarOdontologo(odontologo.nombre(), odontologo.apellido(), odontologo.matricula());
+        service.modificarOdontologo(odontologo.getNombre(), odontologo.getApellido(), odontologo.getMatricula());
         return new ResponseEntity<>("Odontologo modificado con éxito", null, HttpStatus.OK);
     }
 

@@ -19,8 +19,8 @@ public class PacienteController {
 
     @PostMapping("/paciente")
     public ResponseEntity<String> agregarPaciente(@RequestBody Paciente paciente){
-        if (Objects.nonNull(service.buscarPaciente(paciente.dni()))) return new ResponseEntity<>("El paciente que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
-        if (paciente.dni().isEmpty() || paciente.nombre().isEmpty() || paciente.apellido().isEmpty()) return new ResponseEntity<>("Error al agregar el paciente, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
+        if (Objects.nonNull(service.buscarPaciente(paciente.getDni()))) return new ResponseEntity<>("El paciente que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
+        if (paciente.getDni().isEmpty() || paciente.getNombre().isEmpty() || paciente.getApellido().isEmpty()) return new ResponseEntity<>("Error al agregar el paciente, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
 
         service.agregarPaciente(paciente);
         return new ResponseEntity<>("Paciente agregado con éxito", null, HttpStatus.CREATED);
@@ -28,9 +28,9 @@ public class PacienteController {
 
     @PutMapping("/paciente")
     public ResponseEntity<String> modificarPaciente(@RequestBody Paciente paciente) {
-        if(Objects.isNull(service.buscarPaciente(paciente.dni()))) return new ResponseEntity<>("El paciente a modificar no existe", null, HttpStatus.NOT_FOUND);
+        if(Objects.isNull(service.buscarPaciente(paciente.getDni()))) return new ResponseEntity<>("El paciente a modificar no existe", null, HttpStatus.NOT_FOUND);
 
-        service.modificarPaciente(paciente.nombre(), paciente.apellido(), paciente.dni());
+        service.modificarPaciente(paciente.getNombre(), paciente.getApellido(), paciente.getDni());
         return new ResponseEntity<>("Paciente modificado con éxito", null, HttpStatus.OK);
     }
 

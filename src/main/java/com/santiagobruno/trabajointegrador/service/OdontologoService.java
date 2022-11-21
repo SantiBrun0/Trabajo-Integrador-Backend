@@ -1,7 +1,7 @@
 package com.santiagobruno.trabajointegrador.service;
 
 import com.santiagobruno.trabajointegrador.model.Odontologo;
-import com.santiagobruno.trabajointegrador.repository.OdontologoDAOH2;
+import com.santiagobruno.trabajointegrador.repository.OdontologoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,26 +11,29 @@ import java.util.List;
 @Service
 public class OdontologoService {
 
-    private final OdontologoDAOH2 odontologoDAO;
+    private final OdontologoRepository repository;
 
     public void agregarOdontologo(Odontologo odontologo) {
-        odontologoDAO.agregar(odontologo);
+        repository.save(odontologo);
     }
 
     public void modificarOdontologo(String nombre, String apellido, String matricula) {
-        odontologoDAO.modificar(nombre, apellido, matricula);
+        var odontologoExistente = repository.findByMatricula(matricula);
+        odontologoExistente.setNombre(nombre);
+        odontologoExistente.setApellido(apellido);
+        repository.save(odontologoExistente);
     }
 
     public void eliminarOdontologo(String matricula) {
-        odontologoDAO.eliminar(matricula);
+        repository.deleteByMatricula(matricula);
     }
 
     public Odontologo buscarOdontologo(String matricula) {
-        return odontologoDAO.buscar(matricula);
+        return repository.findByMatricula(matricula);
     }
 
     public List<Odontologo> listarOdontologos() {
-        return odontologoDAO.listar();
+        return repository.findAll();
     }
 
 

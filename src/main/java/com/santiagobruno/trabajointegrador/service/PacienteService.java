@@ -1,7 +1,7 @@
 package com.santiagobruno.trabajointegrador.service;
 
 import com.santiagobruno.trabajointegrador.model.Paciente;
-import com.santiagobruno.trabajointegrador.repository.PacienteDAOH2;
+import com.santiagobruno.trabajointegrador.repository.PacienteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,26 +12,29 @@ import java.util.List;
 @Service
 public class PacienteService {
 
-    private final PacienteDAOH2 pacienteDAO;
+    private final PacienteRepository repository;
 
     public void agregarPaciente(Paciente paciente) {
-        pacienteDAO.agregar(paciente);
+        repository.save(paciente);
     }
 
     public void modificarPaciente(String nombre, String apellido, String dni) {
-        pacienteDAO.modificar(nombre, apellido, dni);
+        var pacienteExistente = repository.findByDni(dni);
+        pacienteExistente.setNombre(nombre);
+        pacienteExistente.setApellido(apellido);
+        repository.save(pacienteExistente);
     }
 
     public void eliminarPaciente(String dni) {
-        pacienteDAO.eliminar(dni);
+        repository.deleteByDni(dni);
     }
 
     public Paciente buscarPaciente(String dni) {
-        return pacienteDAO.buscar(dni);
+        return repository.findByDni(dni);
     }
 
     public List<Paciente> listarPacientes() {
-        return pacienteDAO.listar();
+        return repository.findAll();
     }
 
 }

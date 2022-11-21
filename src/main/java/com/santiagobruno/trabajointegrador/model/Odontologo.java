@@ -1,54 +1,29 @@
 package com.santiagobruno.trabajointegrador.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "odontologos")
 public class Odontologo {
+
+    @Id
+    private String matricula;
     private String apellido;
     private String nombre;
-    private String matricula;
 
-    public Odontologo(String apellido, String nombre, String matricula) {
-        this.apellido = apellido;
-        this.nombre = nombre;
-        this.matricula = matricula;
-    }
-
-    public String apellido() {
-        return apellido;
-    }
-
-    public String nombre() {
-        return nombre;
-    }
-
-    public String matricula() {
-        return matricula;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
 
     @Override
     public boolean equals(Object obj) {
