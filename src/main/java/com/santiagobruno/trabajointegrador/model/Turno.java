@@ -20,12 +20,15 @@ public class Turno {
 
     @Id
     private String codigo;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "paciente_dni")
     private Paciente paciente;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "odontologo_matricula")
     private Odontologo odontologo;
+
     private LocalDate fecha;
 
 
