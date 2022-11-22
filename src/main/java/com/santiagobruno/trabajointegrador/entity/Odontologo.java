@@ -1,14 +1,8 @@
-package com.santiagobruno.trabajointegrador.model;
+package com.santiagobruno.trabajointegrador.entity;
 
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -20,8 +14,16 @@ import java.util.Objects;
 public class Odontologo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "matricula", nullable = false, unique = true)
     private String matricula;
+
+    @Column(name = "apellido", nullable = false)
     private String apellido;
+
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
 

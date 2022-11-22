@@ -1,6 +1,6 @@
 package com.santiagobruno.trabajointegrador.repository;
 
-import com.santiagobruno.trabajointegrador.model.Turno;
+import com.santiagobruno.trabajointegrador.entity.Turno;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;

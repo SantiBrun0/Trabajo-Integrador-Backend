@@ -1,15 +1,9 @@
-package com.santiagobruno.trabajointegrador.model;
+package com.santiagobruno.trabajointegrador.entity;
 
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.sql.Date;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -21,11 +15,23 @@ import java.util.Objects;
 public class Paciente {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "dni", nullable = false, unique = true)
     private String dni;
+
+    @Column(name = "apellido", nullable = false)
     private String apellido;
+
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+
+    @Column(name = "domicilio")
     private String domicilio;
-    private Date fechaAlta;
+
+    @Column(name = "fecha_alta")
+    private LocalDate fechaAlta;
 
 
     @Override

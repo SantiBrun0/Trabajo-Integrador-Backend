@@ -1,6 +1,6 @@
 package com.santiagobruno.trabajointegrador.repository;
 
-import com.santiagobruno.trabajointegrador.model.Paciente;
+import com.santiagobruno.trabajointegrador.entity.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;

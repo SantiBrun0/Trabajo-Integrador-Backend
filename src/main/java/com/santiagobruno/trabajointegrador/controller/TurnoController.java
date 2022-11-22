@@ -1,6 +1,6 @@
 package com.santiagobruno.trabajointegrador.controller;
 
-import com.santiagobruno.trabajointegrador.model.Turno;
+import com.santiagobruno.trabajointegrador.entity.Turno;
 import com.santiagobruno.trabajointegrador.service.TurnoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

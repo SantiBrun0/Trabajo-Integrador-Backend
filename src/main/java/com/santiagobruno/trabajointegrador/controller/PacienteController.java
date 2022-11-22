@@ -1,7 +1,7 @@
 package com.santiagobruno.trabajointegrador.controller;
 
 
-import com.santiagobruno.trabajointegrador.model.Paciente;
+import com.santiagobruno.trabajointegrador.entity.Paciente;
 import com.santiagobruno.trabajointegrador.service.PacienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

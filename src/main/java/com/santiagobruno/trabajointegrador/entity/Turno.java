@@ -1,13 +1,11 @@
-package com.santiagobruno.trabajointegrador.model;
+package com.santiagobruno.trabajointegrador.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -19,17 +17,23 @@ import java.util.Objects;
 public class Turno {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "codigo_turno", nullable = false, unique = true)
     private String codigo;
 
     @ManyToOne
-    @JoinColumn(name = "paciente_dni")
+    @JoinColumn(name = "paciente_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "paciente_turno_fk"))
     private Paciente paciente;
 
     @ManyToOne
-    @JoinColumn(name = "odontologo_matricula")
+    @JoinColumn(name = "odontologo_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "odontologo_turno_fk"))
     private Odontologo odontologo;
 
-    private LocalDate fecha;
+    @Column(name = "fecha_hora", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.S", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime fecha;
 
 
     @Override

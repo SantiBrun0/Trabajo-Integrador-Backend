@@ -1,6 +1,6 @@
 package com.santiagobruno.trabajointegrador.service;
 
-import com.santiagobruno.trabajointegrador.model.Paciente;
+import com.santiagobruno.trabajointegrador.entity.Paciente;
 import com.santiagobruno.trabajointegrador.repository.PacienteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

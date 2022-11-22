@@ -1,11 +1,11 @@
 package com.santiagobruno.trabajointegrador.service;
 
-import com.santiagobruno.trabajointegrador.model.Turno;
+import com.santiagobruno.trabajointegrador.entity.Turno;
 import com.santiagobruno.trabajointegrador.repository.TurnoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -19,7 +19,7 @@ public class TurnoService {
         repository.save(turno);
     }
 
-    public void modificarTurno(LocalDate fechaNueva, String codigo) {
+    public void modificarTurno(LocalDateTime fechaNueva, String codigo) {
         var turnoExistente = repository.findByCodigo(codigo);
         turnoExistente.setFecha(fechaNueva);
         repository.save(turnoExistente);
