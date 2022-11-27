@@ -1,11 +1,15 @@
 package com.santiagobruno.trabajointegrador.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -18,22 +22,19 @@ public class Turno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    @Column(name = "codigo_turno", nullable = false, unique = true)
-    private String codigo;
-
-    @ManyToOne
-    @JoinColumn(name = "paciente_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "paciente_turno_fk"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paciente_dni", nullable = false)
     private Paciente paciente;
 
-    @ManyToOne
-    @JoinColumn(name = "odontologo_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "odontologo_turno_fk"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "odontologos_matricula", nullable = false)
     private Odontologo odontologo;
 
-    @Column(name = "fecha_hora", nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.S", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime fecha;
+    @NonNull
+    private Date fecha;
 
 
     @Override

@@ -1,10 +1,13 @@
 package com.santiagobruno.trabajointegrador.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,23 +18,19 @@ import java.util.Objects;
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "dni", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String dni;
 
-    @Column(name = "apellido", nullable = false)
+    @NonNull
     private String apellido;
 
-    @Column(name = "nombre", nullable = false)
+    @NonNull
     private String nombre;
 
-    @Column(name = "domicilio")
     private String domicilio;
 
-    @Column(name = "fecha_alta")
     private LocalDate fechaAlta;
+
 
 
     @Override

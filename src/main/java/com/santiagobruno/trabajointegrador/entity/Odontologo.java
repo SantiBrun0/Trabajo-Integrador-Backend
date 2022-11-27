@@ -1,9 +1,12 @@
 package com.santiagobruno.trabajointegrador.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,16 +17,13 @@ import java.util.Objects;
 public class Odontologo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "matricula", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String matricula;
 
-    @Column(name = "apellido", nullable = false)
+    @NonNull
     private String apellido;
 
-    @Column(name = "nombre", nullable = false)
+    @NonNull
     private String nombre;
 
 
