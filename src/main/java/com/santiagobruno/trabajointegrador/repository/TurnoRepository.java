@@ -7,9 +7,9 @@ import javax.transaction.Transactional;
 
 public interface TurnoRepository extends JpaRepository<Turno, String> {
 
-    Turno findById(Long id);
+    Turno findByCodigo(String codigo);
 
     @Transactional
-    void deleteById(Long id);
+    void deleteByCodigo(String codigo);
 
 }

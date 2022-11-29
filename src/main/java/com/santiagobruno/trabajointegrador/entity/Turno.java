@@ -1,15 +1,10 @@
 package com.santiagobruno.trabajointegrador.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -21,9 +16,8 @@ import java.util.Objects;
 public class Turno {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "codigo", nullable = false, unique = true)
+    private String codigo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_dni", nullable = false)
@@ -33,8 +27,9 @@ public class Turno {
     @JoinColumn(name = "odontologos_matricula", nullable = false)
     private Odontologo odontologo;
 
-    @NonNull
-    private Date fecha;
+    @Column(name = "fecha", nullable = false, unique = true)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime fecha;
 
 
     @Override

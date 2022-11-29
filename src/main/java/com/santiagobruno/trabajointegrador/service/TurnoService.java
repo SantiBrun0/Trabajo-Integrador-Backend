@@ -1,16 +1,14 @@
 package com.santiagobruno.trabajointegrador.service;
 
 import com.santiagobruno.trabajointegrador.entity.Turno;
+import com.santiagobruno.trabajointegrador.entity.TurnoDTO;
 import com.santiagobruno.trabajointegrador.repository.OdontologoRepository;
 import com.santiagobruno.trabajointegrador.repository.PacienteRepository;
 import com.santiagobruno.trabajointegrador.repository.TurnoRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 
@@ -22,32 +20,31 @@ public class TurnoService {
     private final OdontologoRepository odontologoRepository;
     private final PacienteRepository pacienteRepository;
 
-    public void agregarTurno(String dni, String matricula, Date fecha) {
+    public void agregarTurno(TurnoDTO turnoDTO) {
         var turno = new Turno();
-        turno.setFecha(fecha);
+        turno.setCodigo(turnoDTO.getCodigo());
+        turno.setFecha(turnoDTO.getFecha());
 
-        var odontologo = odontologoRepository.findByMatricula(matricula);
+        var odontologo = odontologoRepository.findByMatricula(turnoDTO.getMatricula());
         turno.setOdontologo(odontologo);
 
-        var paciente = pacienteRepository.findByDni(dni);
+        var paciente = pacienteRepository.findByDni(turnoDTO.getDni());
         turno.setPaciente(paciente);
 
         repository.save(turno);
     }
 
-    public void modificarTurno(Date fechaNueva, Long id) {
-        var turnoExistente = repository.findById(id);
+    public void modificarTurno(String codigo, LocalDateTime fechaNueva) {
+        var turnoExistente = repository.findByCodigo(codigo);
         turnoExistente.setFecha(fechaNueva);
         repository.save(turnoExistente);
     }
 
-    public void eliminarTurno(Long id) {
-        repository.deleteById(id);
+    public void eliminarTurno(String codigo) {
+        repository.deleteByCodigo(codigo);
     }
 
-    public Turno buscarTurno(Long id) {
-        return repository.findById(id);
-    }
+    public Turno buscarTurno(String codigo) { return repository.findByCodigo(codigo); }
 
     public List<Turno> listarTurnos() {
         return repository.findAll();
