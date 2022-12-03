@@ -26,6 +26,11 @@ public class Odontologo {
     @NonNull
     private String nombre;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "odontologo", orphanRemoval = true)
+    //@JoinColumn(name = "odontologo_matricula")
+    @JsonManagedReference("odontologo")
+    private Set<Turno> turnos = new HashSet<>();
+
 
     @Override
     public boolean equals(Object obj) {

@@ -1,5 +1,6 @@
 package com.santiagobruno.trabajointegrador.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -20,11 +21,13 @@ public class Turno {
     private String codigo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "paciente_dni", nullable = false)
+    @JoinColumn(name = "paciente_dni", nullable = false, referencedColumnName = "dni")
+    @JsonBackReference("paciente")
     private Paciente paciente;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "odontologos_matricula", nullable = false)
+    @JoinColumn(name = "odontologo_matricula", nullable = false, referencedColumnName = "matricula")
+    @JsonBackReference("odontologo")
     private Odontologo odontologo;
 
     @Column(name = "fecha", nullable = false, unique = true)

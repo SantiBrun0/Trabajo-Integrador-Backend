@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,12 +32,20 @@ public class TurnoService {
         var paciente = pacienteRepository.findByDni(turnoDTO.getDni());
         turno.setPaciente(paciente);
 
+        var turnosOdontologo = odontologo.getTurnos();
+        turnosOdontologo.add(turno);
+
+        var turnosPaciente = paciente.getTurnos();
+        turnosPaciente.add(turno);
+
         repository.save(turno);
     }
 
-    public void modificarTurno(String codigo, LocalDateTime fechaNueva) {
-        var turnoExistente = repository.findByCodigo(codigo);
-        turnoExistente.setFecha(fechaNueva);
+    public void modificarTurno(TurnoDTO turnoDTO) {
+        var turnoExistente = repository.findByCodigo(turnoDTO.getCodigo());
+        turnoExistente.setFecha(turnoDTO.getFecha());
+        turnoExistente.setOdontologo(odontologoRepository.findByMatricula(turnoDTO.getMatricula()));
+        turnoExistente.setPaciente(pacienteRepository.findByDni(turnoDTO.getDni()));
         repository.save(turnoExistente);
     }
 
@@ -46,8 +55,21 @@ public class TurnoService {
 
     public Turno buscarTurno(String codigo) { return repository.findByCodigo(codigo); }
 
-    public List<Turno> listarTurnos() {
-        return repository.findAll();
+    public TurnoDTO buscarTurnoDTO(String codigo) {
+        var turno = repository.findByCodigo(codigo);
+
+        return new TurnoDTO(turno.getCodigo(), turno.getFecha(), turno.getOdontologo().getMatricula(), turno.getPaciente().getDni());
+    }
+
+    public List<TurnoDTO> listarTurnos() {
+        var turnos = repository.findAll();
+        var turnosDTO = new ArrayList<TurnoDTO>();
+
+        for (Turno turno:turnos) {
+            turnosDTO.add(new TurnoDTO(turno.getCodigo(), turno.getFecha(), turno.getOdontologo().getMatricula(), turno.getPaciente().getDni()));
+        }
+
+        return turnosDTO;
     }
 
 }

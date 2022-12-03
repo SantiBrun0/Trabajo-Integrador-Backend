@@ -1,5 +1,6 @@
 package com.santiagobruno.trabajointegrador.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -31,6 +32,10 @@ public class Paciente {
 
     private LocalDate fechaAlta;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "paciente", orphanRemoval = true)
+    //@JoinColumn(name = "paciente_dni")
+    @JsonManagedReference("paciente")
+    private Set<Turno> turnos = new HashSet<>();
 
 
     @Override

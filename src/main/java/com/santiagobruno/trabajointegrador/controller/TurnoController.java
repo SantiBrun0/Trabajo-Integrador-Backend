@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -32,11 +33,11 @@ public class TurnoController {
         return new ResponseEntity<>("Turno agregado con éxito", null, HttpStatus.CREATED);
     }
 
-    @PutMapping("/turno/{codigo}")
-    public ResponseEntity<String> modificarTurno(@PathVariable String codigo, @RequestBody LocalDateTime fechaNueva) {
-        if(Objects.isNull(service.buscarTurno(codigo))) return new ResponseEntity<>("El turno a modificar no existe", null, HttpStatus.NOT_FOUND);
+    @PutMapping("/turno")
+    public ResponseEntity<String> modificarTurno(@RequestBody TurnoDTO turnoDTO) {
+        if(Objects.isNull(service.buscarTurno(turnoDTO.getCodigo()))) return new ResponseEntity<>("El turno a modificar no existe", null, HttpStatus.NOT_FOUND);
 
-        service.modificarTurno(codigo, fechaNueva);
+        service.modificarTurno(turnoDTO);
         return new ResponseEntity<>("Turno modificado con éxito", null, HttpStatus.OK);
     }
 
@@ -49,14 +50,14 @@ public class TurnoController {
     }
 
     @GetMapping("/turno/{codigo}")
-    public ResponseEntity<Turno> buscarTurno(@PathVariable String codigo) {
+    public ResponseEntity<TurnoDTO> buscarTurno(@PathVariable String codigo) {
         if(Objects.isNull(service.buscarTurno(codigo))) return new ResponseEntity<>(null, null, HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(service.buscarTurno(codigo), null, HttpStatus.OK);
+        return new ResponseEntity<>(service.buscarTurnoDTO(codigo), null, HttpStatus.OK);
     }
 
     @GetMapping("/turnos")
-    public ResponseEntity<List<Turno>> listarTurnos() {
+    public ResponseEntity<List<TurnoDTO>> listarTurnos() {
         if(service.listarTurnos().isEmpty()) return new ResponseEntity<>(null, null, HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(service.listarTurnos(), null, HttpStatus.OK);
