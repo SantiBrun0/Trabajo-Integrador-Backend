@@ -1,7 +1,5 @@
 package com.santiagobruno.trabajointegrador.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.santiagobruno.trabajointegrador.entity.Turno;
 import com.santiagobruno.trabajointegrador.entity.TurnoDTO;
 import com.santiagobruno.trabajointegrador.service.TurnoService;
 import lombok.AllArgsConstructor;
@@ -9,12 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 

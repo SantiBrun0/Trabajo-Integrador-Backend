@@ -1,6 +1,5 @@
 package com.santiagobruno.trabajointegrador.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
