@@ -12,6 +12,7 @@ import java.util.Objects;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins="*",exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
 public class TurnoController {
 
     private final TurnoService service;
