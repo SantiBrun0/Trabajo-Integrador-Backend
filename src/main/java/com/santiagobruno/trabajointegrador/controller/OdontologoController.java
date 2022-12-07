@@ -2,7 +2,11 @@ package com.santiagobruno.trabajointegrador.controller;
 
 
 import com.santiagobruno.trabajointegrador.entity.Odontologo;
+import com.santiagobruno.trabajointegrador.exceptions.OdontologoEmptyException;
+import com.santiagobruno.trabajointegrador.exceptions.OdontologoRepeteadException;
 import com.santiagobruno.trabajointegrador.service.OdontologoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +20,23 @@ import java.util.Objects;
 @CrossOrigin(origins="*",exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
 public class OdontologoController {
 
+    private static final Logger logger = LoggerFactory.getLogger(OdontologoController.class);
     private final OdontologoService service;
 
     @PostMapping("/odontologo")
     public ResponseEntity<String> agregarOdontologo(@RequestBody Odontologo odontologo) {
-        if (Objects.nonNull(service.buscarOdontologo(odontologo.getMatricula()))) return new ResponseEntity<>("El odontologo que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
-        if (odontologo.getMatricula().isEmpty() || odontologo.getNombre().isEmpty() || odontologo.getApellido().isEmpty()) return new ResponseEntity<>("Error al agregar el odontologo, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
 
-        service.agregarOdontologo(odontologo);
-        return new ResponseEntity<>("Odontologo agregado con éxito", null, HttpStatus.CREATED);
+        try {
+            service.agregarOdontologo(odontologo);
+            return new ResponseEntity<>("Odontologo agregado con éxito", null, HttpStatus.CREATED);
+        } catch (OdontologoRepeteadException e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>("El odontologo que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
+        } catch (OdontologoEmptyException e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>("Error al agregar el odontologo, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PutMapping("/odontologo")

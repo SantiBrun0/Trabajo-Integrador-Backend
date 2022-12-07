@@ -2,8 +2,12 @@ package com.santiagobruno.trabajointegrador.controller;
 
 
 import com.santiagobruno.trabajointegrador.entity.Paciente;
+import com.santiagobruno.trabajointegrador.exceptions.PacienteEmptyException;
+import com.santiagobruno.trabajointegrador.exceptions.PacienteRepeteadException;
 import com.santiagobruno.trabajointegrador.service.PacienteService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +20,23 @@ import java.util.Objects;
 @CrossOrigin(origins="*",exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
 public class PacienteController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PacienteController.class);
     private final PacienteService service;
 
     @PostMapping("/paciente")
     public ResponseEntity<String> agregarPaciente(@RequestBody Paciente paciente){
-        if (Objects.nonNull(service.buscarPaciente(paciente.getDni()))) return new ResponseEntity<>("El paciente que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
-        if (paciente.getDni().isEmpty() || paciente.getNombre().isEmpty() || paciente.getApellido().isEmpty()) return new ResponseEntity<>("Error al agregar el paciente, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
 
-        service.agregarPaciente(paciente);
-        return new ResponseEntity<>("Paciente agregado con éxito", null, HttpStatus.CREATED);
+        try {
+            service.agregarPaciente(paciente);
+            return new ResponseEntity<>("Paciente agregado con éxito", null, HttpStatus.CREATED);
+        } catch (PacienteRepeteadException e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>("El paciente que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
+        } catch (PacienteEmptyException e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>("Error al agregar el paciente, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PutMapping("/paciente")

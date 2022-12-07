@@ -1,8 +1,11 @@
 package com.santiagobruno.trabajointegrador.service;
 
 import com.santiagobruno.trabajointegrador.entity.Odontologo;
+import com.santiagobruno.trabajointegrador.exceptions.OdontologoEmptyException;
+import com.santiagobruno.trabajointegrador.exceptions.OdontologoRepeteadException;
 import com.santiagobruno.trabajointegrador.repository.OdontologoRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +16,9 @@ public class OdontologoService {
 
     private final OdontologoRepository repository;
 
-    public void agregarOdontologo(Odontologo odontologo) {
+    public void agregarOdontologo(Odontologo odontologo) throws OdontologoRepeteadException, OdontologoEmptyException {
+        if (repository.exists(Example.of(odontologo))) throw new OdontologoRepeteadException();
+        if (odontologo.getMatricula().isEmpty() || odontologo.getNombre().isEmpty() || odontologo.getApellido().isEmpty()) throw new OdontologoEmptyException();
         repository.save(odontologo);
     }
 
