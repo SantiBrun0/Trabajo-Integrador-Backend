@@ -29,12 +29,9 @@ public class PacienteController {
         try {
             service.agregarPaciente(paciente);
             return new ResponseEntity<>("Paciente agregado con éxito", null, HttpStatus.CREATED);
-        } catch (PacienteRepeteadException e) {
+        } catch (PacienteRepeteadException | PacienteEmptyException e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>("El paciente que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
-        } catch (PacienteEmptyException e) {
-            logger.error(e.getMessage());
-            return new ResponseEntity<>("Error al agregar el paciente, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), null, HttpStatus.BAD_REQUEST);
         }
 
     }
