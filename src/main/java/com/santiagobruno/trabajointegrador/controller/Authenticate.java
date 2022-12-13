@@ -1,5 +1,6 @@
-package com.santiagobruno.trabajointegrador.jwt;
+package com.santiagobruno.trabajointegrador.controller;
 
+import com.santiagobruno.trabajointegrador.jwt.JwtUtil;
 import com.santiagobruno.trabajointegrador.model.AuthenticationRequest;
 import com.santiagobruno.trabajointegrador.model.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;

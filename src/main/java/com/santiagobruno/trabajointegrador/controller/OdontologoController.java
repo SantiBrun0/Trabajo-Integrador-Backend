@@ -29,12 +29,9 @@ public class OdontologoController {
         try {
             service.agregarOdontologo(odontologo);
             return new ResponseEntity<>("Odontologo agregado con éxito", null, HttpStatus.CREATED);
-        } catch (OdontologoRepeteadException e) {
+        } catch (OdontologoRepeteadException | OdontologoEmptyException e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>("El odontologo que intenta agregar ya existe", null, HttpStatus.BAD_REQUEST);
-        } catch (OdontologoEmptyException e) {
-            logger.error(e.getMessage());
-            return new ResponseEntity<>("Error al agregar el odontologo, ingrese datos correctos", null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), null, HttpStatus.BAD_REQUEST);
         }
 
     }
